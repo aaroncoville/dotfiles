@@ -1,41 +1,80 @@
 cask_args appdir: '/Applications'
 
-tap 'homebrew/bundle'
+tap "homebrew/bundle"
+tap "homebrew/cask"
+tap "homebrew/cask-fonts"
+tap "homebrew/core"
 
-brew 'ack'
-brew 'azure-cli'
-brew 'bash-completion'
-brew 'coreutils'
-brew 'fzf'
-brew 'git'
-brew 'go'
-brew 'grc'
-brew 'jp2a'
-brew 'jq'
-brew 'kubectx'
-brew 'libgit2'
-brew 'openssl'
-brew 'node'
-brew 'postgresql'
-brew 'python'
-brew 'reattach-to-user-namespace'
-brew 'ruby-build'
-brew 'rbenv'
-brew 'shpotify'
-brew 'spaceman-diff'
-brew 'speedtest-cli'
-brew 'tmux'
-brew 'unrar'
-brew 'watch'
-brew 'wget'
-brew 'yarn'
-brew 'youtube-dl'
+brew "ack"
+brew "bash-completion"
+brew "bat"
+brew "coreutils"
+brew "dos2unix"
+brew "findutils"
+brew "fontconfig"
+brew "fzf"
+brew "gawk"
+brew "gifsicle"
+brew "git"
+brew "gnupg"
+brew "httpie"
+brew "jq"
+brew "libgit2"
+brew "mas"
+brew "moreutils"
+brew "nmap"
+brew "node", link: false
+brew "nvm"
+brew "ruby-build"
+brew "rbenv"
+brew "reattach-to-user-namespace"
+brew "ruby"
+brew "speedtest-cli"
+brew "the_silver_searcher"
+brew "tmux"
+brew "todo-txt"
+brew "tree"
+brew "ttyrec"
+brew "watch"
+brew "yarn"
+brew "youtube-dl"
 
-cask 'google-chrome'
-cask 'handbrake'
-cask 'iterm2'
-cask 'slack'
-cask 'spotify'
-cask 'transmission' 
-cask 'visual-studio-code'
-cask 'vlc'
+cask "1password"
+cask "alfred"
+cask "backblaze"
+cask "bartender"
+cask "dash"
+cask "datagrip"
+cask "firefox"
+cask "flux"
+cask "font-awesome-terminal-fonts"
+cask "font-fontawesome"
+cask "font-hack"
+cask "font-source-code-pro"
+cask "gpg-suite"
+cask "intellij-idea"
+cask "iterm2"
+cask "little-snitch"
+cask "macbreakz"
+cask "micro-snitch"
+cask "microsoft-outlook"
+cask "microsoft-teams"
+cask "notion"
+cask "oracle-jdk"
+cask "postman"
+cask "signal"
+cask "slack"
+cask "soapui"
+cask "sourcetree"
+cask "the-unarchiver"
+cask "visual-studio-code"
+
+mas "Chronicle Pro", id: 1280542517
+mas "Kaleidoscope", id: 587512244
+mas "Magnet", id: 441258766
+mas "Microsoft Remote Desktop", id: 1295203466
+mas "ReadKit", id: 588726889
+mas "Things", id: 904280696
+mas "Ulysses", id: 1225570693
+mas "Xcode", id: 497799835
+mas "Yoink", id: 457622435
