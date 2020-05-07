@@ -95,7 +95,7 @@ ohmyzshPluginInstall () {
     if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
         info 'zsh-syntax-highlighting already installed'
     else
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && 'zsh-syntax-highlighting installed'
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && success 'zsh-syntax-highlighting installed'
     fi
 }
 
@@ -115,7 +115,7 @@ pl10kInstall () {
         info 'powerlevel10k already installed'
     else
         echo "Now installing powerlevel10k..."
-        git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k && success 'powerlevel10k installed'
+        git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k && success 'powerlevel10k installed'
     fi
 }
 
