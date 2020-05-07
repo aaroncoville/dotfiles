@@ -211,7 +211,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo ''
 	echo "Now pulling down jldeen dotfiles..."
-	git clone https://github.com/jldeen/dotfiles.git ~/.dotfiles
+	git clone https://github.com/aaroncoville/dotfiles-1.git ~/.dotfiles
 	echo ''
 	cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
 	echo ''
