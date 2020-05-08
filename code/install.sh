@@ -1,7 +1,8 @@
 #!/bin/sh
 
-if test ! $(which code)
-then
+if ! type "code" > /dev/null; then
+  echo " VS Code not installed, skipping extension installation..."
+else
   echo "  Installing required VS Code Extensions."
   code --install-extension juanmnl.vscode-theme-1984
   code --install-extension qinjia.seti-icons
