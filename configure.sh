@@ -8,10 +8,9 @@ installAdBlockingHostsFile () {
     if [[ $response =~ (yes|y|Y) ]];then
         action "cp /etc/hosts /etc/hosts.backup"
         sudo cp /etc/hosts /etc/hosts.backup
-        ok
+        ok "back up created."
         action "cp hosts /etc/hosts"
         sudo cp hosts /etc/hosts
-        ok
         bot "Your /etc/hosts file has been updated. The previous version has been saved in /etc/hosts.backup in case you get cold feet."
     else
         ok "Eh? Ok. It's your identity.";
@@ -67,7 +66,7 @@ zshZInstall () {
 configureGitCompletion () {
     GIT_VERSION=`git --version | awk '{print $3}'`
     URL="https://raw.github.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
-    success "git-completion for $GIT_VERSION downloaded"
+    ok "git-completion for $GIT_VERSION downloaded"
     if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
         error "ERROR: Couldn't download git completion script. Make sure you have a working internet connection."
         fail 'git completion download failed'
@@ -84,7 +83,7 @@ ohmyzshInstall () {
         cd ~/.oh-my-zsh && git pull
             if [[ $? -eq 0 ]]
             then
-                success "Update complete..." && cd
+                ok "Update complete..." && cd
             else
                 fail "Update not complete..." >&2 cd
             fi
@@ -92,8 +91,8 @@ ohmyzshInstall () {
     else
     echo "oh-my-zsh not found, now installing oh-my-zsh..."
     echo ''
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-    success 'oh-my-zsh installed'
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
+    ok 'oh-my-zsh installed'
     fi
 }
 
@@ -192,8 +191,6 @@ wombatColorSchemeInstall () {
 }
 
 bot "Greetings meatbag. Unsurprisingly you need help setting up your system."
-bot "How paranoid are you?"
-installAdBlockingHostsFile
 
 bot "Okay, lets get the prerequisites out of the way."
 running "Setting up Homebrew..."
@@ -209,10 +206,12 @@ configureGitCompletion
 ohmyzshInstall
 zshZInstall
 ohmyzshPluginInstall
-pl9kInstall
 pl10kInstall
 tmuxTpmInstall
 fubectlInstall
+
+bot "How paranoid are you?"
+installAdBlockingHostsFile
 
 #vim setup
 vundleInstall
