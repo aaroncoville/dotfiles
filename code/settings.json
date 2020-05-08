@@ -3,7 +3,7 @@
     "editor.fontFamily": "'Hasklig'",
     "editor.fontSize": 14,
     "editor.wordWrap": "on",
-    "terminal.integrated.fontFamily": "Pragmata Pro Nerd Font",
+    "terminal.integrated.fontFamily": "PragmataPro Nerd Font",
     "terminal.integrated.fontSize": 11,
     "terminal.integrated.shell.osx": "/bin/zsh",
     "git.autofetch": true,
