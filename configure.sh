@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eou pipefail
 
-source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/aaroncoville/dotfiles-1/mac/script/prompt)"
+source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/aaroncoville/dotfiles/mac/script/prompt)"
 
 brewInstall () {
     # Install brew
@@ -214,7 +214,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
     echo ''
 	echo "Now pulling down aaroncoville's dotfiles..."
-	git clone https://github.com/aaroncoville/dotfiles-1.git ~/.dotfiles
+	git clone https://github.com/aaroncoville/dotfiles.git ~/.dotfiles
 	echo ''
 	cd $HOME/.dotfiles && echo "switched to .dotfiles dir..."
 	echo ''
