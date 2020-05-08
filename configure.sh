@@ -9,8 +9,8 @@ installAdBlockingHostsFile () {
         action "cp /etc/hosts /etc/hosts.backup"
         sudo cp /etc/hosts /etc/hosts.backup
         ok "back up created."
-        action "cp hosts /etc/hosts"
-        sudo cp hosts /etc/hosts
+        action "cp ./hosts /etc/hosts"
+        sudo cp ./hosts /etc/hosts
         bot "Your /etc/hosts file has been updated. The previous version has been saved in /etc/hosts.backup in case you get cold feet."
     else
         ok "Eh? Ok. It's your identity.";
