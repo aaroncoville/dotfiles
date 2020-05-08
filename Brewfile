@@ -43,13 +43,14 @@ cask "1password"
 cask "alfred"
 cask "backblaze"
 cask "bartender"
+cask "caffeine"
 cask "dash"
 cask "datagrip"
-cask "firefox"
+cask "homebrew/cask-versions/firefox-developer-edition"
 cask "flux"
-cask "font-awesome-terminal-fonts"
-cask "font-fontawesome"
 cask "font-hack"
+cask "font-quicksand"
+cask "font-hasklig"
 cask "font-source-code-pro"
 cask "gpg-suite"
 cask "intellij-idea"
@@ -74,7 +75,7 @@ mas "Kaleidoscope", id: 587512244
 mas "Magnet", id: 441258766
 mas "Microsoft Remote Desktop", id: 1295203466
 mas "ReadKit", id: 588726889
-mas "Things", id: 904280696
+mas "Things 3", id: 904280696
 mas "Ulysses", id: 1225570693
 mas "Xcode", id: 497799835
 mas "Yoink", id: 457622435
