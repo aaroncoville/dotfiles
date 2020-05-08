@@ -13,7 +13,7 @@ echo ''
 setup_gitconfig () {
   if ! [ -f git/gitconfig.local.symlink ]
   then
-    info 'setup gitconfig'
+    info 'setting up gitconfig'
 
     git_credential='cache'
     if [ "$(uname -s)" == "Darwin" ]
@@ -21,14 +21,14 @@ setup_gitconfig () {
       git_credential='osxkeychain'
     fi
 
-    user ' - What is your github author name?'
+    bot ' - What is your github author name?'
     read -e git_authorname
-    user ' - What is your github author email?'
+    bot ' - What is your github author email?'
     read -e git_authoremail
 
     sed -e "s/AUTHORNAME/$git_authorname/g" -e "s/AUTHOREMAIL/$git_authoremail/g" -e "s/GIT_CREDENTIAL_HELPER/$git_credential/g" git/gitconfig.local.symlink.example > git/gitconfig.local.symlink
 
-    success 'gitconfig'
+    ok 'gitconfig'
   fi
 }
 
@@ -54,7 +54,7 @@ link_file () {
 
       else
 
-        user "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
+        bot "File already exists: $dst ($(basename "$src")), what do you want to do?\n\
         [s]kip, [S]kip all, [o]verwrite, [O]verwrite all, [b]ackup, [B]ackup all?"
         read -n 1 action
 
@@ -86,25 +86,25 @@ link_file () {
     if [ "$overwrite" == "true" ]
     then
       rm -rf "$dst"
-      success "removed $dst"
+      ok "removed $dst"
     fi
 
     if [ "$backup" == "true" ]
     then
       mv "$dst" "${dst}.backup"
-      success "moved $dst to ${dst}.backup"
+      ok "moved $dst to ${dst}.backup"
     fi
 
     if [ "$skip" == "true" ]
     then
-      success "skipped $src"
+      ok "skipped $src"
     fi
   fi
 
   if [ "$skip" != "true" ]  # "false" or empty
   then
     ln -s "$1" "$2"
-    success "linked $1 to $2"
+    ok "linked $1 to $2"
   fi
 }
 
@@ -133,23 +133,7 @@ add_line () {
   cat <(fgrep -i -v "$command" <(crontab -l)) <(echo "$job") | crontab -
 }
 
-setup_gitconfig
-install_dotfiles
 
-# If we're on a Mac, let's install and setup homebrew.
-if [ "$(uname -s)" == "Darwin" ]
-then
-  info "installing dependencies"
-  if source bin/dot | while read -r data; do info "$data"; done
-  then
-    success "dependencies installed"
-    echo ''
-    echo "Now updating dependencies..."
-    pip3 install --upgrade setuptools
-  else
-    fail "error installing dependencies"
-  fi
-fi
 
 installMods () {
   info "starting aaroncoville's mods"
@@ -159,7 +143,7 @@ installMods () {
     if [ ! -L $HOME/bin ]; then
       info "current $HOME/bin is not a symlink, creating backup"
       sudo mv $HOME/bin bin_old
-      success "backup folder created"
+      ok "backup folder created"
     else info "$HOME/bin symlink already exists"
     fi
   else
@@ -169,27 +153,26 @@ installMods () {
 
 symlinks () {
   # symlink .dotfiles bin to ~
-  ln -s $HOME/.dotfiles/bin $HOME/bin && success "symlink for $HOME/bin folder created"
+  ln -s $HOME/.dotfiles/bin $HOME/bin && ok "symlink for $HOME/bin folder created"
 
   # symlink .dotfiles tmux to ~
-  ln -s $HOME/.dotfiles/tmux $HOME/.tmux && success "symlink for $HOME/.tmux folder created"
+  ln -s $HOME/.dotfiles/tmux $HOME/.tmux && ok "symlink for $HOME/.tmux folder created"
 
   # symlink VSCode User Settings
   if [ -d $HOME/Library/Application\ Support/Code/User ] ; then
-    echo "Making backup of current settings.json and creating symlink..."
-    echo ''
-    mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.old.json && success "settings.old.json created"
-    ln -s $HOME/.dotfiles/code/settings.json $HOME/Library/Application\ Support/Code/User/settings.json && success "settings.json for vs code symlink created"
+    running "Making backup of current settings.json and creating symlink..."
+    mv $HOME/Library/Application\ Support/Code/User/settings.json $HOME/Library/Application\ Support/Code/User/settings.old.json && ok "settings.old.json created"
+    ln -s $HOME/.dotfiles/code/settings.json $HOME/Library/Application\ Support/Code/User/settings.json && ok "settings.json for vs code symlink created"
   else
     info "symlink for vs code settings not created"
-    echo "VS Code does not appear to be installed or has not been launched yet. Cannot create symlink for VS Code User settings..."
+    warn "VS Code does not appear to be installed or has not been launched yet. Cannot create symlink for VS Code User settings..."
   fi
 
   # airport symlink
   if ! [ -f /usr/local/bin/airport ]
     then
       sudo ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport /usr/local/bin/airport
-      success "symlink for airport created"
+      ok "symlink for airport created"
     else 
       info "symlink for airport already exists"
     fi
@@ -197,7 +180,7 @@ symlinks () {
 
 colors () {
   # colorls setup
-  sudo gem install colorls && success 'ls colors have been configured'
+  sudo gem install colorls && ok 'ls colors have been configured'
 }
 
 crontab () {
@@ -205,7 +188,7 @@ crontab () {
   add_line "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
     if [[ $? -eq 0 ]]
     then
-    success "$PATH added to crontab"
+    ok "$PATH added to crontab"
     else
     info "ERROR $PATH could not be added to crontab"
     fi
@@ -213,7 +196,7 @@ crontab () {
   add_cron "speedtest-cli --simple > ~/bin/bandwidth.log"
     if [[ $? -eq 0 ]]
     then
-    success "crontab created for speedtest cli --simple"
+    ok "crontab created for speedtest cli --simple"
     else
     info "ERROR crontab could not be created for speedtest cli --simple"
     fi
@@ -221,18 +204,18 @@ crontab () {
   add_cron "speedtest-cli --json > ~/bin/bandwidth.json"
     if [[ $? -eq 0 ]]
     then
-    success "crontab created for speedtest cli --json"
+    ok "crontab created for speedtest cli --json"
     else
     info "ERROR crontab could not be created for speedtest cli --json"
     fi
 
   # first run of speedtest-cli
-  echo "Running speedtest-cli for tmux status bar data now..."
+  running "Running speedtest-cli for tmux status bar data now..."
   speedtest-cli --simple > ~/bin/bandwidth.log
-  success "speedtest-cli bandwidth.log created"
+  ok "speedtest-cli bandwidth.log created"
 
   speedtest-cli --json > ~/bin/bandwidth.json
-  success "speedtest-cli bandwidth.json created"
+  ok "speedtest-cli bandwidth.json created"
 }
 
 itermConfig () {
@@ -247,7 +230,7 @@ itermConfig () {
     defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
       if [[ $? -eq 0 ]]
       then
-          success "successfully configured iTerm2 to use aaroncoville's custom colors..."
+          ok "okfully configured iTerm2 to use aaroncoville's custom colors..."
       else
           fail "failed to apply aaroncoville's custom colors..." >&2
   fi
@@ -259,7 +242,7 @@ itermConfig () {
 fontSetup () {
   # install Source Code Pro nerd font
   sudo cp $HOME/.dotfiles/Source\ Code\ Pro\ Nerd\ Font\ Complete.ttf /Library/Fonts
-  success "Source Code Pro font copied successfully!"
+  ok "Source Code Pro font copied okfully!"
 }
 
 configFix () {
@@ -268,16 +251,33 @@ configFix () {
     info "$HOME/.config doesn't exist, nothing to fix"
   else
     sudo chown $(whoami) $HOME/.config 
-    success '.config permissions fixed'
+    ok '.config permissions fixed'
   fi
 }
 
+setup_gitconfig
+install_dotfiles
+
+# If we're on a Mac, let's install and setup homebrew.
+if [ "$(uname -s)" == "Darwin" ]
+then
+  info "installing dependencies"
+  if source bin/dot | while read -r data; do info "$data"; done
+  then
+    ok "dependencies installed"
+    echo ''
+    running "Now updating dependencies..."
+    pip3 install --upgrade setuptools
+  else
+    fail "error installing dependencies"
+  fi
+fi
 installMods
 symlinks
 colors
-#jdcrontab
+#crontab
 itermConfig
 fontSetup
 configFix
 
-success 'Badass macOS terminal installed!'
+ok 'Badass macOS terminal installed!'

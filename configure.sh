@@ -3,27 +3,44 @@ set -eou pipefail
 
 source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/aaroncoville/dotfiles/mac/script/prompt)"
 
+installAdBlockingHostsFile () {
+    read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
+    if [[ $response =~ (yes|y|Y) ]];then
+        action "cp /etc/hosts /etc/hosts.backup"
+        sudo cp /etc/hosts /etc/hosts.backup
+        ok
+        action "cp hosts /etc/hosts"
+        sudo cp hosts /etc/hosts
+        ok
+        bot "Your /etc/hosts file has been updated. The previous version has been saved in /etc/hosts.backup in case you get cold feet."
+    else
+        ok "Eh? Ok. It's your identity.";
+    fi
+}
+
 brewInstall () {
     # Install brew
     if test ! $(which brew); then
     # Install the correct homebrew for each OS type
         if test "$(uname)" = "Darwin"
         then
+            action "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-            success 'brew installed'
+            ok "Installed Homebrew. I can't believe I had to even do that for you."
         elif test "$(expr substr $(uname -s) 1 5)" = "Linux"
         then
+            action "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
             ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install)"
-            success 'brew installed'
+            ok "Installed Homebrew. I can't believe I had to even do that for you."
         fi
     else
-        info 'brew is already installed'
+        info 'Well, color me shocked. Homebrew is already installed!?'
     fi
 }
 
 brewUpdate () {
     brew update
-    success 'brew updated'
+    ok 'Okay, I made sure homebrew is updated.'
 }
 
 zshInstall () {
@@ -32,8 +49,8 @@ zshInstall () {
     if test $(which zsh); then
         info "zsh already installed..."
     else
-        brew install zsh zsh-completions
-        success 'zsh and zsh-completions installed'
+        brew install zsh
+        ok 'zsh installed'
     fi
 }
 
@@ -43,7 +60,7 @@ zshZInstall () {
         info "zsh-z already exists..."
     else
         git clone https://github.com/agkozak/zsh-z ~/.oh-my-zsh/custom/plugins/zsh-z
-        success 'zsh-z installed'
+        ok 'zsh-z installed'
     fi
 }
 
@@ -52,7 +69,7 @@ configureGitCompletion () {
     URL="https://raw.github.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
     success "git-completion for $GIT_VERSION downloaded"
     if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
-        echo "ERROR: Couldn't download completion script. Make sure you have a working internet connection." && exit 1
+        error "ERROR: Couldn't download git completion script. Make sure you have a working internet connection."
         fail 'git completion download failed'
     fi
 }
@@ -60,7 +77,7 @@ configureGitCompletion () {
 ohmyzshInstall () {
     # oh-my-zsh install
     if [ -d ~/.oh-my-zsh/ ] ; then
-    info 'oh-my-zsh is already installed...'
+    bot 'It looks like oh-my-zsh is already installed...'
     read -p "Would you like to update oh-my-zsh now? y/n " -n 1 -r
     echo ''
         if [[ $REPLY =~ ^[Yy]$ ]] ; then
@@ -85,27 +102,20 @@ ohmyzshPluginInstall () {
     if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-completions" ]; then
         info 'zsh-completions already installed'
     else
-        git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions && success 'zsh-completions installed'
+        running "Now installing zsh-completions..."
+        git clone https://github.com/zsh-users/zsh-completions ~/.oh-my-zsh/custom/plugins/zsh-completions && ok 'zsh-completions installed'
     fi
     if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
         info 'zsh-autosuggestions already installed'
     else
-        git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && success 'zsh-autosuggestions installed'
+        running "Now installing zsh-autosuggestions..."
+        git clone git://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions && ok 'zsh-autosuggestions installed'
     fi
     if [ -d "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]; then
         info 'zsh-syntax-highlighting already installed'
     else
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && success 'zsh-syntax-highlighting installed'
-    fi
-}
-
-pl9kInstall () {
-    # powerlevel9k install
-    if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel9k" ]; then
-        info 'powerlevel9k already installed'
-    else
-        echo "Now installing powerlevel9k..."
-    git clone https://github.com/bhilburn/powerlevel9k.git ~/.oh-my-zsh/custom/themes/powerlevel9k && success 'powerlevel9k installed'
+        running "Now installing zsh-syntax-highlighting..."
+        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting && ok 'zsh-syntax-highlighting installed'
     fi
 }
 
@@ -114,8 +124,8 @@ pl10kInstall () {
     if [ -d "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
         info 'powerlevel10k already installed'
     else
-        echo "Now installing powerlevel10k..."
-        git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k && success 'powerlevel10k installed'
+        running "Now installing powerlevel10k..."
+        git clone https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k && ok 'powerlevel10k installed'
     fi
 }
 
@@ -124,8 +134,8 @@ tmuxTpmInstall () {
     if [ -d "$HOME/.tmux/plugins/tpm" ]; then
         info 'tmux tpm already installed'
     else
-        echo "Now installing Tmux TPM manager..."
-        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && success 'tmux tpm manager installed'
+        running "Now installing Tmux TPM manager..."
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ok 'tmux tpm manager installed'
     fi
 }
 
@@ -135,11 +145,11 @@ fubectlInstall () {
     if [ -f "$HOME/bin/fubectl.source" ]; then
         info 'fubectl.source already exists'
     else
-        echo "Now installing fubectl..."
+        running "Now installing fubectl..."
         if [ ! -d "$HOME/bin" ]; then
             mkdir $HOME/bin
         fi
-        curl -o "$HOME/bin/fubectl.source" -LO https://rawgit.com/kubermatic/fubectl/master/fubectl.source && success "fubectl placed in $HOME/bin"
+        curl -o "$HOME/bin/fubectl.source" -LO https://rawgit.com/kubermatic/fubectl/master/fubectl.source && ok "fubectl placed in $HOME/bin"
     fi
 }
 
@@ -148,10 +158,8 @@ vundleInstall () {
         info 'vundle already exists'
     else
         # vimrc vundle install
-        echo ''
-        echo "Now installing vundle..."
-        echo ''
-        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && success 'vundle installed'
+        running "Now installing vundle..."
+        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && ok 'vundle installed'
     fi
 }
 
@@ -160,7 +168,7 @@ pathogenInstall () {
         info 'pathogen already installed'
     else
         mkdir -p ~/.vim/autoload ~/.vim/bundle && \
-            curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim && success 'pathogen installed'
+            curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim && ok 'pathogen installed'
     fi
 }
 
@@ -168,7 +176,7 @@ nerdtreeInstall () {
     if [ -d "$HOME/.vim/bundle/nerdtree" ]; then
         info 'vim nerdtree already installed'
     else
-        git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree && success 'vim nerdtree installed'
+        git clone https://github.com/scrooloose/nerdtree.git ~/.vim/bundle/nerdtree && ok 'vim nerdtree installed'
     fi
 }
 
@@ -179,10 +187,16 @@ wombatColorSchemeInstall () {
         # Vim color scheme install
         git clone https://github.com/sheerun/vim-wombat-scheme.git ~/.vim/colors/wombat 
         mv ~/.vim/colors/wombat/colors/* ~/.vim/colors/
-        success 'vim wombat color scheme installed'
+        ok 'vim wombat color scheme installed'
     fi
 }
 
+bot "Greetings meatbag. Unsurprisingly you need help setting up your system."
+bot "How paranoid are you?"
+installAdBlockingHostsFile
+
+bot "Okay, lets get the prerequisites out of the way."
+running "Setting up Homebrew..."
 # brew setup
 brewInstall
 brewUpdate
