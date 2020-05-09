@@ -181,7 +181,7 @@ symlinks () {
 colors () {
   # colorls setup
   sudo gem install colorls
-  sudo mkdir -p ~/.config/colorls && sudo cp ../dark_colors.yaml ~/.config/colorls/dark_colors.yaml
+  sudo mkdir -p ~/.config/colorls && sudo cp ./dark_colors.yaml ~/.config/colorls/dark_colors.yaml
   ok 'ls colors have been configured'
 }
 
