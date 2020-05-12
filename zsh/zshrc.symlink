@@ -117,7 +117,7 @@ plugins=(sudo git history tmux tmuxinator zsh-autosuggestions zsh-completions zs
 source $ZSH/oh-my-zsh.sh
 source $ZSH_CUSTOM/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/.p9kgt
+source $HOME/.p10k.zsh
 source $HOME/.functions
 source $HOME/.aliases
 
