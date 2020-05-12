@@ -1,12 +1,9 @@
 # p10k.zsh configuration file
 #
-# Author: Thomas Bendler <code@thbe.org>
-# Date:   Sun Jan 12 17:54:00 CET 2020
-#
 # Based on romkatv/powerlevel10k/config/p10k-lean.zsh, checksum 551.
 # For more information see https://github.com/romkatv/powerlevel10k
 #
-# Apply configiguration changes without restarting zsh.
+# Apply configuration changes without restarting zsh.
 # Edit ~/.p10k.zsh and type `source ~/.p10k.zsh`.
 #
 # Temporarily change options
@@ -60,7 +57,7 @@
       rvm                     # ruby version from rvm (https://rvm.io)
       # fvm                   # flutter version management (https://github.com/leoafarias/fvm)
       # luaenv                # lua version from luaenv (https://github.com/cehoffman/luaenv)
-      # jenv                  # java version from jenv (https://github.com/jenv/jenv)
+      jenv                  # java version from jenv (https://github.com/jenv/jenv)
       # plenv                 # perl version from plenv (https://github.com/tokuhirom/plenv)
       # kubecontext           # current kubernetes context (https://kubernetes.io/)
       # terraform             # terraform workspace (https://www.terraform.io)
@@ -82,8 +79,8 @@
       time                    # current time
       # =========================[ Line #2 ]=========================
       newline
-      public_ip               # public IP address
-      proxy                   # system-wide http/https/ftp proxy
+      # public_ip               # public IP address
+      # proxy                   # system-wide http/https/ftp proxy
       battery                 # internal battery
       # example               # example user-defined segment (see prompt_example function below)
   )
@@ -224,17 +221,17 @@
 
   ##################################[ dir: current directory ]##################################
   # Default current directory color.
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=31
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=2
   # If directory is too long, shorten some of its segments to the shortest possible unique
   # prefix. The shortened directory can be tab-completed to the original.
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   # Replace removed segment suffixes with this symbol.
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=
   # Color of the shortened directory segments.
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=103
+  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=7
   # Color of the anchor directory segments. Anchor segments are never shortened. The first
   # segment is always an anchor.
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=39
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=4
   # Display anchor directory segments in bold.
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   # Don't shorten directories that contain any of these files. They are anchors.
@@ -425,8 +422,8 @@
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
   # Icon color.
-  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=76
-  typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=244
+  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=2
+  typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=11
   # Custom icon.
   # typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_EXPANSION='⭐'
   # Custom prefix.
