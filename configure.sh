@@ -3,20 +3,6 @@ set -eou pipefail
 
 source /dev/stdin <<< "$(curl -fsSL https://raw.githubusercontent.com/aaroncoville/dotfiles/mac/script/prompt)"
 
-installAdBlockingHostsFile () {
-    read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
-    if [[ $response =~ (yes|y|Y) ]];then
-        action "cp /etc/hosts /etc/hosts.backup"
-        sudo cp /etc/hosts /etc/hosts.backup
-        ok "back up created."
-        action "cp ./hosts /etc/hosts"
-        sudo cp ./hosts /etc/hosts
-        bot "Your /etc/hosts file has been updated. The previous version has been saved in /etc/hosts.backup in case you get cold feet."
-    else
-        ok "Eh? Ok. It's your identity.";
-    fi
-}
-
 brewInstall () {
     # Install brew
     if test ! $(which brew); then
@@ -209,9 +195,6 @@ ohmyzshPluginInstall
 pl10kInstall
 tmuxTpmInstall
 fubectlInstall
-
-bot "How paranoid are you?"
-installAdBlockingHostsFile
 
 #vim setup
 vundleInstall

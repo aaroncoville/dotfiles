@@ -44,6 +44,7 @@ cask "alfred"
 cask "backblaze"
 cask "bartender"
 cask "caffeine"
+cask "cleanmymac"
 cask "dash"
 cask "datagrip"
 cask "homebrew/cask-versions/firefox-developer-edition"
@@ -69,7 +70,6 @@ cask "sourcetree"
 cask "the-unarchiver"
 cask "visual-studio-code"
 
-mas "Chronicle Pro", id: 1280542517
 mas "Kaleidoscope", id: 587512244
 mas "Magnet", id: 441258766
 mas "Microsoft Remote Desktop", id: 1295203466

@@ -134,6 +134,20 @@ add_line () {
 }
 
 
+installAdBlockingHostsFile () {
+    bot "How paranoid are you?"
+    read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
+    if [[ $response =~ (yes|y|Y) ]];then
+        action "cp /etc/hosts /etc/hosts.backup"
+        sudo cp /etc/hosts /etc/hosts.backup
+        ok "back up created."
+        action "cp ./hosts /etc/hosts"
+        sudo cp ./hosts /etc/hosts
+        bot "Your /etc/hosts file has been updated. The previous version has been saved in /etc/hosts.backup in case you get cold feet."
+    else
+        ok "Eh? Ok. It's your identity.";
+    fi
+}
 
 installMods () {
   info "starting aaroncoville's mods"
@@ -277,6 +291,7 @@ fi
 installMods
 symlinks
 colors
+installAdBlockingHostsFile
 #crontab
 itermConfig
 fontSetup
