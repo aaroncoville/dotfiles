@@ -283,7 +283,7 @@ then
     ok "dependencies installed"
     echo ''
     running "Now updating dependencies..."
-    pip3 install --upgrade setuptools
+    pip3 install --upgrade setuptools --user
   else
     fail "error installing dependencies"
   fi
