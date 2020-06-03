@@ -41,13 +41,10 @@ brew "youtube-dl"
 
 cask "1password"
 cask "alfred"
-cask "backblaze"
 cask "bartender"
-cask "caffeine"
 cask "cleanmymac"
 cask "dash"
 cask "datagrip"
-cask "homebrew/cask-versions/firefox-developer-edition"
 cask "flux"
 cask "font-hack"
 cask "font-hasklig"
@@ -55,15 +52,8 @@ cask "font-source-code-pro"
 cask "gpg-suite"
 cask "intellij-idea"
 cask "iterm2"
-cask "little-snitch"
-cask "macbreakz"
-cask "micro-snitch"
-cask "microsoft-outlook"
-cask "microsoft-teams"
-cask "notion"
 cask "oracle-jdk"
 cask "postman"
-cask "signal"
 cask "slack"
 cask "soapui"
 cask "sourcetree"
@@ -72,9 +62,6 @@ cask "visual-studio-code"
 
 mas "Kaleidoscope", id: 587512244
 mas "Magnet", id: 441258766
-mas "Microsoft Remote Desktop", id: 1295203466
-mas "ReadKit", id: 588726889
 mas "Things 3", id: 904280696
-mas "Ulysses", id: 1225570693
 mas "Xcode", id: 497799835
 mas "Yoink", id: 457622435
