@@ -34,17 +34,13 @@ cask "bartender"
 cask "cleanmymac"
 cask "dash"
 cask "datagrip"
-cask "flux"
 cask "font-hack"
 cask "font-hasklig"
 cask "font-source-code-pro"
-cask "iterm2"
-cask "sourcetree"
 cask "the-unarchiver"
 cask "visual-studio-code"
 
 mas "Kaleidoscope", id: 587512244
 mas "Magnet", id: 441258766
-mas "Things 3", id: 904280696
 mas "Xcode", id: 497799835
 mas "Yoink", id: 457622435

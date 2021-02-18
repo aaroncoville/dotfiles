@@ -52,11 +52,11 @@ zshZInstall () {
 configureGitCompletion () {
     GIT_VERSION=`git --version | awk '{print $3}'`
     URL="https://raw.github.com/git/git/v$GIT_VERSION/contrib/completion/git-completion.bash"
-    ok "git-completion for $GIT_VERSION downloaded"
     if ! curl "$URL" --silent --output "$HOME/.git-completion.bash"; then
         error "ERROR: Couldn't download git completion script. Make sure you have a working internet connection."
         fail 'git completion download failed'
     fi
+    ok "git-completion for $GIT_VERSION downloaded"
 }
 
 ohmyzshInstall () {
@@ -194,7 +194,7 @@ zshZInstall
 ohmyzshPluginInstall
 pl10kInstall
 tmuxTpmInstall
-fubectlInstall
+#fubectlInstall
 
 #vim setup
 vundleInstall
