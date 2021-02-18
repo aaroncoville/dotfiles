@@ -1,6 +1,6 @@
 {
-    "workbench.colorTheme": "1984 - Unbolded",
-    "editor.fontFamily": "'Hasklig'",
+    "workbench.colorTheme": "Dracula Pro",
+    "editor.fontFamily": "'Jetbrains Mono'",
     "editor.fontSize": 14,
     "editor.wordWrap": "on",
     "terminal.integrated.fontFamily": "PragmataPro Nerd Font",
